@@ -10,6 +10,7 @@ import (
 
 type Mnist struct {
 	label string
+	dim   int
 	data  []int
 }
 
@@ -36,15 +37,20 @@ func NewMnist(csvFile string) []Mnist {
 		mnistData[i-1].data = make([]int, len(elem[1:]))
 
 		mnistData[i-1].label = elem[0]
+		nDim := 0
 		for j, pixel := range elem[1:] {
 			mnistData[i-1].data[j], _ = strconv.Atoi(pixel)
+			nDim++
 		}
+		mnistData[i-1].dim = nDim
 	}
 
 	return mnistData
 }
 
 func main() {
-	mnists := NewMnist("./train.csv")
-	fmt.Printf("Num of Data: %d\n", len(mnists))
+	// Read MNIST Data
+	mnist := NewMnist("./train.csv")
+	fmt.Printf("Num of Data: %d\n", len(mnist))
+	fmt.Printf("Num of Dims: %d\n", mnist[0].dim)
 }
