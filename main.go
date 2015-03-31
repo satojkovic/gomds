@@ -11,7 +11,7 @@ import (
 type Mnist struct {
 	label string
 	dim   int
-	data  []int
+	data  []float64
 }
 
 func NewMnist(csvFile string) []Mnist {
@@ -34,12 +34,12 @@ func NewMnist(csvFile string) []Mnist {
 		if i == 0 {
 			continue
 		}
-		mnistData[i-1].data = make([]int, len(elem[1:]))
+		mnistData[i-1].data = make([]float64, len(elem[1:]))
 
 		mnistData[i-1].label = elem[0]
 		nDim := 0
 		for j, pixel := range elem[1:] {
-			mnistData[i-1].data[j], _ = strconv.Atoi(pixel)
+			mnistData[i-1].data[j], _ = strconv.ParseFloat(pixel, 64)
 			nDim++
 		}
 		mnistData[i-1].dim = nDim
